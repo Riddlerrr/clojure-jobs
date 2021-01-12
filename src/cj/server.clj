@@ -2,9 +2,11 @@
   (:require
     [integrant.core :as ig]
     [aero.core :refer [read-config]]
-    [ring.adapter.jetty :refer  [run-jetty]]))
+    [ring.adapter.jetty :refer  [run-jetty]]
+    [cj.routes :refer [routes]]))
 
-(def app (constantly {:status 200 :body "Hello"}))
+;(def app (constantly {:status 200 :body "Hello"}))
+(def app routes)
 
 (defmethod ig/init-key :server
   [_ options]
@@ -21,7 +23,7 @@
 
 (defn start [& args]
   _sys
-  println "Server started")
+  (println "Server started"))
 
 
 
