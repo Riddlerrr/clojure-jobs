@@ -15,14 +15,17 @@
 
 (defn ok [{:keys [db]}]
   (println "db:" db)
-  (constantly {:status 200 :body "ok"}))
+  {:status 200 :body "Ok"})
 
 (def routes
   [["/swagger.json"
     {:get {:no-doc true
            :swagger {:info {:title "Clojure Jobs API"
                             :description "Clojure Jobs API"}}
-           :handler (swagger/create-swagger-handler)}}]])
+           :handler (swagger/create-swagger-handler)}}]
+   ["/ping"
+    {:get {:summary "Just to check the API works fine"
+           :handler ok}}]])
 
 (defn create-app [db]
   (ring/ring-handler
