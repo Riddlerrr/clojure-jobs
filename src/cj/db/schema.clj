@@ -1,7 +1,6 @@
 (ns cj.db.schema
   (:require
     [next.jdbc :as jdbc]))
-    ;[next.jdbc.sql :as sql]))
 
 (def schema "empty"
   (slurp "src/cj/db/schema.sql"))
@@ -13,17 +12,8 @@
   [db]
   (try
     (jdbc/execute-one! db [schema])
-    (println "Created database and addressbook table!")
-    ;; if table creation was successful, it didn't exist before
-    ;; so populate it...
-    (try
-      ;(doseq [row initial-user-data]
-      ;  (sql/insert! db :addressbook row))
-      (println "Populated database with initial data!")
-      (catch Exception e
-        (println "Exception:" (ex-message e))
-        (println "Unable to populate the initial data -- proceed with caution!")))
+    (println "DB schema was updated")
 
     (catch Exception e
       (println "Exception:" (ex-message e))
-      (println "Looks like the database is already setup?"))))
+      (println "Something went wrong during update DB schema."))))
