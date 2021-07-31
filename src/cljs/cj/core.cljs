@@ -1,4 +1,4 @@
-(ns cj.browser)
+(ns cj.core)
 ;; start is called by init and after code reloading finishes
 (defn ^:dev/after-load start []
   (js/console.log "start"))
