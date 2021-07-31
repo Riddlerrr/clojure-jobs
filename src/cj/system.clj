@@ -7,7 +7,7 @@
     [cj.db.schema :refer [load-schema]]))
 
 (defn system-config []
-  {:system/db     {:dbtype "sqlite" :dbname "clojure_jobs_development"}
+  {:system/db     {:dbtype "sqlite" :dbname "db/clojure_jobs_development.db"}
    :system/app    {:db (ig/ref :system/db)}
    :system/server {:app  (ig/ref :system/app)
                    :port 8000}})

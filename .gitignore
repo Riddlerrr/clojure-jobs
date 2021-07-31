@@ -4,3 +4,5 @@
 *.iws
 .cpcache
 .nrepl-port
+.calva
+db/*.db
