@@ -1,22 +1,20 @@
-{:deps
- {org.clojure/clojure     {:mvn/version "1.10.3"}
-  org.clojure/clojurescript {:mvn/version "1.10.879"}
+{:aliases {:dev {:extra-paths ["test/clj" "dev"]}
+           :server {:main-opt ["-m" "cj.system"]}}
 
-  ring/ring-jetty-adapter {:mvn/version "1.8.1"}
+ :deps {org.clojure/clojure     {:mvn/version "1.10.3"}
+        org.clojure/clojurescript {:mvn/version "1.10.879"}
 
-  ; System
-  integrant/integrant     {:mvn/version "0.8.0"}
-  integrant/repl          {:mvn/version "0.3.2"}
+        ring/ring-jetty-adapter {:mvn/version "1.8.1"}
 
-  ; Routing lib
-  metosin/reitit          {:mvn/version "0.5.11"}
+        ; System
+        integrant/integrant     {:mvn/version "0.8.0"}
+        integrant/repl          {:mvn/version "0.3.2"}
 
-  ; DB
-  seancorfield/next.jdbc  {:mvn/version "1.1.613"}
-  org.xerial/sqlite-jdbc  {:mvn/version "3.32.3.2"}}
+        ; Routing lib
+        metosin/reitit          {:mvn/version "0.5.11"}
 
- :aliases
- {:dev-backend {:extra-paths ["test" "dev"]}
-  :dev-frontend {:extra-deps {thheller/shadow-cljs {:mvn/version "2.15.2"}}
-                 :main-opts ["-m" "shadow.cljs.devtools.cli" "watch" "dev-app"]}
-  :server {:main-opt ["-m" "cj.system"]}}}
+        ; DB
+        seancorfield/next.jdbc  {:mvn/version "1.1.613"}
+        org.xerial/sqlite-jdbc  {:mvn/version "3.32.3.2"}}
+
+ :paths ["src/clj" "test/clj" "resources"]}

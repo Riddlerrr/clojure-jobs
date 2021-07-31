@@ -1,8 +1,8 @@
 ##Using REPL for development
 
-### To run REPL:
+### To run backend REPL:
 ```
-clj -A:dev
+clj -M:dev
 ```
 
 ### Main dev command:
@@ -11,12 +11,8 @@ clj -A:dev
 - `(reset)` to reset web server
 - `(reset-all)` to restart all services
 
-### To run backend REPL:
-```
-clj -M:dev-backend
-```
 
 ### To run frontend dev server (shadow-cljs):
 ```
-clj -M:dev-frontend
+npx shadow-cljs watch app
 ```

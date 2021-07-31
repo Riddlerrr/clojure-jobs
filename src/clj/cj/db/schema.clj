@@ -3,7 +3,7 @@
     [next.jdbc :as jdbc]))
 
 (def schema "empty"
-  (slurp "src/cj/db/schema.sql"))
+  (slurp "resources/src/db/schema.sql"))
 
 (defn load-schema
   "Called at application startup. Attempts to create the
