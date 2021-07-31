@@ -1,0 +1,15 @@
+;; shadow-cljs configuration
+{:deps true
+ :dependencies
+ []
+ :builds
+ {:dev-app {:target :browser
+        :output-dir "resources/public/dev-js"
+        :asset-path "/dev-js"
+        :modules
+        {:main ;; <- becomes resources/public/dev-js/main.js
+         {:entries [cj.browser]}}
+              ;; start a development http server on http://localhost:8020
+        :devtools
+        {:http-root "resources/public"
+         :http-port 8020}}}}

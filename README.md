@@ -11,7 +11,12 @@ clj -A:dev
 - `(reset)` to reset web server
 - `(reset-all)` to restart all services
 
-### To run server:
+### To run backend REPL:
 ```
-bin/server
+clj -M:dev-backend
+```
+
+### To run frontend dev server (shadow-cljs):
+```
+clj -M:dev-frontend
 ```

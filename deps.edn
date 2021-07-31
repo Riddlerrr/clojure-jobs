@@ -1,5 +1,6 @@
 {:deps
  {org.clojure/clojure     {:mvn/version "1.10.3"}
+  org.clojure/clojurescript {:mvn/version "1.10.879"}
 
   ring/ring-jetty-adapter {:mvn/version "1.8.1"}
 
@@ -15,5 +16,7 @@
   org.xerial/sqlite-jdbc  {:mvn/version "3.32.3.2"}}
 
  :aliases
- {:dev {:extra-paths ["test" "dev"]}
+ {:dev-backend {:extra-paths ["test" "dev"]}
+  :dev-frontend {:extra-deps {thheller/shadow-cljs {:mvn/version "2.15.2"}}
+                 :main-opts ["-m" "shadow.cljs.devtools.cli" "watch" "dev-app"]}
   :server {:main-opt ["-m" "cj.system"]}}}

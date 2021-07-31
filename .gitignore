@@ -5,4 +5,9 @@
 .cpcache
 .nrepl-port
 .calva
+.lsp
+.shadow-cljs
+node_modules
+
+resources/public/dev-js
 db/*.db
