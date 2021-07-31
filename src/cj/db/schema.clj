@@ -13,7 +13,7 @@
   (try
     (jdbc/execute-one! db [schema])
     (println "DB schema was updated")
-
+ 
     (catch Exception e
       (println "Exception:" (ex-message e))
       (println "Something went wrong during update DB schema."))))
