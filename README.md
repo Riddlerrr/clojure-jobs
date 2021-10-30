@@ -1,4 +1,4 @@
-##Using REPL for development
+## Using REPL for development
 
 ### To run backend REPL:
 ```
@@ -13,6 +13,14 @@ clj -M:dev
 
 
 ### To run frontend dev server (shadow-cljs):
+
 ```
 npx shadow-cljs watch app
 ```
+or run alias
+```
+npm run dev
+```
+
+After that you can connect to the REPL using Calva:
+`Connect to the running REPL` -> `shadow-cljs` -> `:app`
