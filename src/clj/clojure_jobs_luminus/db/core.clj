@@ -1,7 +1,6 @@
 (ns clojure-jobs-luminus.db.core
   (:require
    [cheshire.core :refer [generate-string parse-string]]
-   [next.jdbc.date-time]
    [next.jdbc.prepare]
    [next.jdbc.result-set]
    [clojure.tools.logging :as log]
@@ -112,5 +111,5 @@
   (time/plus (time/instant))
   (get-last-vacancies {:limit 10})
   (get-last-vacancies))
-   
-  
+
+

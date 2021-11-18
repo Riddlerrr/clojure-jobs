@@ -11,8 +11,7 @@
               <a href="#">{{vacancy.title}}</a>
             </h3>
             <p>
-              Россия, Москва, опубликованно 3 часа назад
-              {{vacancy.location}}, опубликованно
+              {{vacancy.location}}, опубликованно {{vacancy.created-at|time-ago}}
             </p>
           </div>
           <div class="column">
