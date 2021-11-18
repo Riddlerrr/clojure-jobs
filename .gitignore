@@ -8,6 +8,10 @@
 .lsp
 .shadow-cljs
 node_modules
+log/
+target/
+dev-config.edn
+test-config.edn
 
 resources/public/dev-js
 db/*.db
