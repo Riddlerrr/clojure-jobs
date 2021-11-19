@@ -6,7 +6,8 @@
    [clojure.test :refer :all]
    [next.jdbc :as jdbc]
    [clojure-jobs-luminus.config :refer [env]]
-   [mount.core :as mount]))
+   [mount.core :as mount]
+   [java-time :as time]))
 
 (use-fixtures
   :once
@@ -14,25 +15,33 @@
     (mount/start
      #'clojure-jobs-luminus.config/env
      #'clojure-jobs-luminus.db.core/*db*)
-    (migrations/migrate ["migrate"] (select-keys env [:database-url]))
+    ;; (migrations/migrate ["migrate"] (select-keys env [:database-url]))
+    (migrations/migrate ["reset"] (select-keys env [:database-url]))
     (f)))
 
-(deftest test-users
-  (jdbc/with-transaction [t-conn *db* {:rollback-only true}]
-    (is (= 1 (db/create-user!
-              t-conn
-              {:id         "1"
-               :first_name "Sam"
-               :last_name  "Smith"
-               :email      "sam.smith@example.com"
-               :pass       "pass"}
-              {})))
-    (is (= {:id         "1"
-            :first_name "Sam"
-            :last_name  "Smith"
-            :email      "sam.smith@example.com"
-            :pass       "pass"
-            :admin      nil
-            :last_login nil
-            :is_active  nil}
-           (db/get-user t-conn {:id "1"} {})))))
+(deftest test-vacancies
+  (let [expired-at (time/plus (time/local-date-time) (time/days 14))]
+    (jdbc/with-transaction [t-conn *db* {:rollback-only true}]
+      (is
+       (= 1
+          (db/create-vacancy!
+           t-conn
+           {:title "Senior Clojure Developer"
+            :description "В нашу супер компанию требуются гребцы"
+            :location "Москва"
+            :salary-min 5000
+            :salary-max 7000
+            :remote-available true
+            :expired-at expired-at}
+           {})))
+
+      (testing "get inserted id"
+        (let [vacancy (db/get-vacancy t-conn {:id 1} {})]
+          (is
+           (= {:title "Senior Clojure Developer"
+               :description "В нашу супер компанию требуются гребцы"
+               :location "Москва"
+               :salary-min 5000
+               :salary-max 7000
+               :remote-available true}
+              (select-keys vacancy [:title :description :location :salary-min :salary-max :remote-available]))))))))
