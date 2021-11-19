@@ -32,3 +32,9 @@ SELECT * FROM vacancies WHERE id = :id
 select * from vacancies
 order by id desc
 limit :limit
+
+-- :name get-last-vacancy :? :1
+-- :doc retrieves last vacancy
+select * from vacancies
+order by id desc
+limit 1
