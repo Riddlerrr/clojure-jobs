@@ -38,7 +38,9 @@ jobs:
         shell: bash
 
       - name: Create test database
-        run: createdb clojure_jobs_luminus_test
+        run: createdb -h postgres -U postgres clojure_jobs_luminus_test
+        env:
+          PGPASSWORD: postgres
 
       - name: Install clojure tools
         uses: DeLaGuardo/setup-clojure@3.5
