@@ -38,8 +38,10 @@ jobs:
         shell: bash
 
       - name: Create test database
-        run: createdb -h postgres -U postgres clojure_jobs_luminus_test
+        run: createdb clojure_jobs_luminus_test
         env:
+          PGHOST: postgres
+          PGUSER: postgres
           PGPASSWORD: postgres
 
       - name: Install clojure tools
