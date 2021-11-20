@@ -3,6 +3,22 @@ on: [push]
 jobs:
   clojure:
     runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: "postgresql://localhost/clojure_jobs_luminus_test?user=postgres&password="
+
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: clojure
+          POSTGRES_PASSWORD: ''
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
