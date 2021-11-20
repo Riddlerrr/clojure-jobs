@@ -12,7 +12,6 @@ jobs:
       postgres:
         image: postgres:11-alpine
         env:
-          POSTGRES_PORT: 5432
           POSTGRES_DB: postgres
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -44,6 +43,7 @@ jobs:
         env:
           PGUSER: postgres
           PGPASSWORD: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
 
       - name: Install clojure tools
         uses: DeLaGuardo/setup-clojure@3.5
