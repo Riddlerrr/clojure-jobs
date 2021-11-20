@@ -4,17 +4,17 @@ jobs:
   clojure:
     runs-on: ubuntu-latest
 
-    env:
-      # POSTGRES_HOST: postgres
-      # POSTGRES_PORT: 5432
+    # env:
       # DATABASE_URL: "postgresql://postgres/clojure_jobs_luminus_test?user=postgres&password=postgres"
-      DATABASE_URL: postgres://postgres@localhost:5432/clojure
+      # DATABASE_URL: postgres://postgres@postgres:5432/clojure
 
     services:
       postgres:
         image: postgres:11-alpine
         env:
-          POSTGRES_DB: clojure
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: postgres
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: >-
@@ -22,8 +22,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-        ports:
-        - 5432:5432
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -34,13 +33,19 @@ jobs:
           distribution: 'zulu'
           java-version: '11'
 
+      - name: Add config file
+        run: echo '{:database-url "postgresql://postgres/clojure_jobs_luminus_test?user=postgres&password=postgres"}' > test-config.edn
+        shell: bash
+
+      - name: Create test database
+        run: createdb clojure_jobs_luminus_test
+
       - name: Install clojure tools
         uses: DeLaGuardo/setup-clojure@3.5
         with:
           # Install just one or all simultaneously
           cli: 1.10.3 # Clojure CLI based on tools.deps
           lein: 'latest'     # or use 'latest' to always provision latest version of leiningen
-          #boot: 2.8.3     # or use 'latest' to always provision latest version of boot
 
       - name: Run tests
         run: lein test
