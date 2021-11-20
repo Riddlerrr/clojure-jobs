@@ -12,7 +12,6 @@ jobs:
       postgres:
         image: postgres:11-alpine
         env:
-          POSTGRES_HOST: postgres
           POSTGRES_PORT: 5432
           POSTGRES_DB: postgres
           POSTGRES_USER: postgres
@@ -34,13 +33,12 @@ jobs:
           java-version: '11'
 
       - name: Add config file
-        run: echo '{:database-url "postgresql://postgres/clojure_jobs_luminus_test?user=postgres&password=postgres"}' > test-config.edn
+        run: echo '{:database-url "postgresql://localhost/clojure_jobs_luminus_test?user=postgres&password=postgres"}' > test-config.edn
         shell: bash
 
       - name: Create test database
         run: createdb clojure_jobs_luminus_test
         env:
-          PGHOST: postgres
           PGUSER: postgres
           PGPASSWORD: postgres
 
