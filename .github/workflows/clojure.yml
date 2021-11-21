@@ -10,10 +10,8 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11-alpine
+        image: postgres:12
         env:
-          POSTGRES_DB: postgres
-          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
@@ -22,7 +20,6 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-
 
     steps:
       - name: Checkout
@@ -39,18 +36,15 @@ jobs:
         shell: bash
 
       - name: Create test database
-        run: createdb clojure_jobs_luminus_test
+        run: psql -d clojure_jobs_luminus_test -f resources/schema.sql
         env:
-          PGUSER: postgres
           PGPASSWORD: postgres
-          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
 
       - name: Install clojure tools
         uses: DeLaGuardo/setup-clojure@3.5
         with:
-          # Install just one or all simultaneously
-          cli: 1.10.3 # Clojure CLI based on tools.deps
-          lein: 'latest'     # or use 'latest' to always provision latest version of leiningen
+          cli: 1.10.3    # Clojure CLI based on tools.deps
+          lein: 'latest'
 
       - name: Run tests
         run: lein test
