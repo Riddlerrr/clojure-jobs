@@ -12,8 +12,9 @@ jobs:
       postgres:
         image: postgres:12
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
         options: >-
+          --name pg_db
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
@@ -39,7 +40,6 @@ jobs:
         run: psql -d clojure_jobs_luminus_test -f resources/schema.sql
         env:
           PGUSER: postgres
-          PGPASSWORD: postgres
 
       - name: Install clojure tools
         uses: DeLaGuardo/setup-clojure@3.5
