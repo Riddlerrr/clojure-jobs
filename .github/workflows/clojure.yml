@@ -38,6 +38,7 @@ jobs:
       - name: Create test database
         run: psql -d clojure_jobs_luminus_test -f resources/schema.sql
         env:
+          PGUSER: postgres
           PGPASSWORD: postgres
 
       - name: Install clojure tools
