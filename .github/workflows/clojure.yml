@@ -11,7 +11,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:12
+        image: postgres:12-alpine
         env:
           POSTGRES_PASSWORD: ${{ env.PG_PASSWORD }}
         options: >-
@@ -47,3 +47,10 @@ jobs:
       - name: Run tests
         run: lein test
         shell: bash
+
+      - name: Cache multiple paths
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2/repositories
+          key: ${{ hashFiles('project.clj') }}
