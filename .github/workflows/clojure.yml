@@ -1,0 +1,56 @@
+name: Run clojure tests
+on: [push]
+jobs:
+  clojure:
+    runs-on: ubuntu-latest
+
+    env:
+      PG_USER: "postgres"
+      PG_PASSWORD: "postgres"
+      PG_DBNAME: "clojure_jobs_luminus_test"
+
+    services:
+      postgres:
+        image: postgres:12-alpine
+        env:
+          POSTGRES_PASSWORD: ${{ env.PG_PASSWORD }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Prepare java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: Add config file
+        run: cp ci-config.edn test-config.edn
+
+      - name: Install clojure tools
+        uses: DeLaGuardo/setup-clojure@3.5
+        with:
+          cli: 1.10.3    # Clojure CLI based on tools.deps
+          lein: 'latest'
+
+      - name: Restore dependencies from cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-lein-${{ hashFiles('project.clj') }}
+          restore-keys: ${{ runner.os }}-lein-
+
+      - name: Create test database
+        run: lein with-profile test run -m clojure-jobs-luminus.tasks.db-setup
+
+      - name: Run tests
+        run: lein test
+        shell: bash
