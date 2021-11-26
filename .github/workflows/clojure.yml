@@ -5,8 +5,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PG_USER: "postrges"
-      PG_PASSWORD: "postrges"
+      PG_USER: "postgres"
+      PG_PASSWORD: "postgres"
       PG_DBNAME: "clojure_jobs_luminus_test"
 
     services:
