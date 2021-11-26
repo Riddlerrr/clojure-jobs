@@ -12,7 +12,7 @@ jobs:
       postgres:
         image: postgres:12
         env:
-          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_PASSWORD: postgres
         options: >-
           --name pg_db
           --health-cmd pg_isready
@@ -33,19 +33,16 @@ jobs:
           java-version: '11'
 
       - name: Add config file
-        run: echo '{:database-url "postgresql://localhost/clojure_jobs_luminus_test?user=postgres&password=postgres"}' > test-config.edn
-        shell: bash
-
-      - name: Create test database
-        run: psql -d clojure_jobs_luminus_test -f resources/schema.sql
-        env:
-          PGUSER: postgres
+        run: cp ci-config.edn test-config.edn
 
       - name: Install clojure tools
         uses: DeLaGuardo/setup-clojure@3.5
         with:
           cli: 1.10.3    # Clojure CLI based on tools.deps
           lein: 'latest'
+
+      - name: Create test database
+        run: lein run -m clojure-jobs-luminus.tasks.db-setup
 
       - name: Run tests
         run: lein test

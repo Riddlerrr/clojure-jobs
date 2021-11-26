@@ -1,0 +1,2 @@
+{:port 3000
+ :database-url "postgresql://localhost/clojure_jobs_luminus_test?user=postgres&password=postgres"}

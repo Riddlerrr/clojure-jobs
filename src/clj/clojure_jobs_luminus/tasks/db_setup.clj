@@ -1,6 +1,5 @@
 (ns clojure-jobs-luminus.tasks.db-setup
   (:require
-   [conman.core :as conman]
    [clojure-jobs-luminus.db.core :refer [*db*] :as db]
    [luminus-migrations.core :as migrations]
    [next.jdbc :as jdbc]
@@ -30,7 +29,7 @@
   (connect)
   (create-db "clojure_jobs_luminus_test")
   (migrate-db)
-  (System/exit 0)
+  ;; (System/exit 0)
 )
 
 (comment
