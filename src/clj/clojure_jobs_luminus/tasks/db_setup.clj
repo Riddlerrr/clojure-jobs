@@ -29,7 +29,7 @@
   (connect)
   (create-db "clojure_jobs_luminus_test")
   (migrate-db)
-  ;; (System/exit 0)
+  (System/exit 0)
 )
 
 (comment

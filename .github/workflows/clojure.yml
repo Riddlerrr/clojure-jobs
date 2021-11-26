@@ -42,7 +42,7 @@ jobs:
           lein: 'latest'
 
       - name: Create test database
-        run: lein run -m clojure-jobs-luminus.tasks.db-setup
+        run: lein with-profile test run -m clojure-jobs-luminus.tasks.db-setup
 
       - name: Run tests
         run: lein test
