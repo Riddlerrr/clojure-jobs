@@ -41,12 +41,14 @@ jobs:
           cli: 1.10.3    # Clojure CLI based on tools.deps
           lein: 'latest'
 
+      - name : Debug
+        run: pwd
+
       - name: Restore dependencies from cache
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.m2/repositories
-          key: ${{ hashFiles('project.clj') }}
+          path: ~/.m2/repositories
+          key: lein-${{ hashFiles('project.clj') }}
 
       - name: Create test database
         run: lein with-profile test run -m clojure-jobs-luminus.tasks.db-setup
