@@ -11,7 +11,7 @@
    #'clojure-jobs-luminus.config/env
    #'clojure-jobs-luminus.db.core/*db*))
 
-(def init-db {:dbtype "postgresql" :dbname "postgres"})
+(def init-db {:dbtype "postgresql" :dbname "postgres" :user "postgres" :password "postgres"})
 (def init-ds (jdbc/get-datasource init-db))
 
 (defn create-db [db-name]
