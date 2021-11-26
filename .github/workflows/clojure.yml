@@ -4,17 +4,17 @@ jobs:
   clojure:
     runs-on: ubuntu-latest
 
-    # env:
-      # DATABASE_URL: "postgresql://postgres/clojure_jobs_luminus_test?user=postgres&password=postgres"
-      # DATABASE_URL: postgres://postgres@postgres:5432/clojure
+    env:
+      PG_USER: "postrges"
+      PG_PASSWORD: "postrges"
+      PG_DBNAME: "clojure_jobs_luminus_test"
 
     services:
       postgres:
         image: postgres:12
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: ${{ env.PG_PASSWORD }}
         options: >-
-          --name pg_db
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s

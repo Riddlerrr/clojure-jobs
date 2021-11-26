@@ -11,7 +11,22 @@
    #'clojure-jobs-luminus.config/env
    #'clojure-jobs-luminus.db.core/*db*))
 
-(def init-db {:dbtype "postgresql" :dbname "postgres" :user "postgres" :password "postgres"})
+(def db-name-to-create
+  (or
+   (System/getenv "PG_DBNAME")
+   "clojure_jobs_luminus_test"))
+
+(def db-user
+  (or
+   (System/getenv "PG_USER")
+   "postgres"))
+
+(def db-password
+  (or
+   (System/getenv "PG_PASSWORD")
+   "postgres"))
+
+(def init-db {:dbtype "postgresql" :dbname "postgres" :user db-user :password db-password})
 (def init-ds (jdbc/get-datasource init-db))
 
 (defn create-db [db-name]
@@ -28,10 +43,11 @@
   (migrations/migrate ["migrate"] (select-keys env [:database-url])))
 
 (defn -main []
-  (create-db "clojure_jobs_luminus_test")
+  (create-db db-name-to-create)
   (connect)
   (migrate-db)
   (System/exit 0))
 
 (comment
+  (connect)
   (create-db "clojure_jobs_luminus_test"))
