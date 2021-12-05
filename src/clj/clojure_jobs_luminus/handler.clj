@@ -9,6 +9,7 @@
     [clojure-jobs-luminus.env :refer [defaults]]
     [mount.core :as mount]))
 
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (mount/defstate init-app
   :start ((or (:init defaults) (fn [])))
   :stop  ((or (:stop defaults) (fn []))))

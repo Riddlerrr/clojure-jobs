@@ -4,7 +4,7 @@
    [selmer.parser :as parser]
    [selmer.filters :as filters]
    [markdown.core :refer [md-to-html-string]]
-   [ring.util.http-response :refer [content-type ok]]
+   [ring.util.http-response :as ruhr]
    [ring.util.anti-forgery :refer [anti-forgery-field]]
    [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
    [ring.util.response]
@@ -18,8 +18,9 @@
 (defn render
   "renders the HTML template located relative to resources/html"
   [_request template & [params]]
-  (content-type
-    (ok
+  #_{:clj-kondo/ignore [:unresolved-var]}
+  (ruhr/content-type
+    (ruhr/ok
       (parser/render-file
         template
         (assoc params

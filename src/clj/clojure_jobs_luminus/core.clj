@@ -22,6 +22,7 @@
   [["-p" "--port PORT" "Port number"
     :parse-fn #(Integer/parseInt %)]])
 
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (mount/defstate ^{:on-reload :noop} http-server
   :start
   (http/start
@@ -33,6 +34,7 @@
   :stop
   (http/stop http-server))
 
+#_{:clj-kondo/ignore [:clojure-lsp/unused-public-var]}
 (mount/defstate ^{:on-reload :noop} repl-server
   :start
   (when (env :nrepl-port)

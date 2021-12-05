@@ -1,14 +1,10 @@
 (ns clojure-jobs-luminus.handler-test
   (:require
-    [clojure.test :refer :all]
-    [ring.mock.request :refer :all]
-    [clojure-jobs-luminus.handler :refer :all]
-    [clojure-jobs-luminus.middleware.formats :as formats]
-    [muuntaja.core :as m]
-    [mount.core :as mount]))
-
-(defn parse-json [body]
-  (m/decode formats/instance "application/json" body))
+   [clojure.test :refer :all]
+   [ring.mock.request :refer [request]]
+   [mount.core :as mount]
+   [clojure-jobs-luminus.handler :refer [app]]
+   [clojure-jobs-luminus.config]))
 
 (use-fixtures
   :once
