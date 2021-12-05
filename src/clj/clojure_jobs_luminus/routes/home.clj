@@ -4,8 +4,7 @@
    [clojure-jobs-luminus.db.core :as db]
    [clojure.java.io :as io]
    [clojure-jobs-luminus.middleware :as middleware]
-   [ring.util.response]
-   [ring.util.http-response :as response]))
+   [ring.util.response]))
 
 (defn home-page [request]
   (layout/render request "home.html" {:vacancies (db/get-last-vacancies {:limit 10})}))

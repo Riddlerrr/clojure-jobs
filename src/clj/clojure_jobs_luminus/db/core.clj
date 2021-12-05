@@ -6,8 +6,6 @@
    [clojure.tools.logging :as log]
    [conman.core :as conman]
    [clojure-jobs-luminus.config :refer [env]]
-   [camel-snake-kebab.extras :refer [transform-keys]]
-   [camel-snake-kebab.core :refer [->kebab-case-keyword]]
    [mount.core :refer [defstate]]
    [hugsql.core]
    [java-time :as time])
@@ -22,6 +20,12 @@
   :stop (conman/disconnect! *db*))
 
 (conman/bind-connection *db* "sql/vacancies.sql")
+
+(declare create-vacancy!)
+(declare update-vacancy!)
+(declare get-vacancy)
+(declare get-last-vacancies)
+(declare get-last-vacancy)
 
 (defn pgobj->clj [^org.postgresql.util.PGobject pgobj]
   (let [type (.getType pgobj)
@@ -78,27 +82,17 @@
         (.setObject stmt idx (.createArrayOf conn elem-type (to-array v)))
         (.setObject stmt idx (clj->jsonb-pgobj v))))))
 
-(defn result-one-snake->kebab
-  [this result options]
-  (->> (hugsql.adapter/result-one this result options)
-       (transform-keys ->kebab-case-keyword)))
+(defmethod hugsql.core/hugsql-result-fn :1 [_]
+  'clojure-jobs-luminus.util/result-one-snake->kebab)
 
-(defn result-many-snake->kebab
-  [this result options]
-  (->> (hugsql.adapter/result-many this result options)
-       (map #(transform-keys ->kebab-case-keyword %))))
+(defmethod hugsql.core/hugsql-result-fn :one [_]
+  'clojure-jobs-luminus.util/result-one-snake->kebab)
 
-(defmethod hugsql.core/hugsql-result-fn :1 [sym]
-  'clojure-jobs-luminus.db.core/result-one-snake->kebab)
+(defmethod hugsql.core/hugsql-result-fn :* [_]
+  'clojure-jobs-luminus.util/result-many-snake->kebab)
 
-(defmethod hugsql.core/hugsql-result-fn :one [sym]
-  'clojure-jobs-luminus.db.core/result-one-snake->kebab)
-
-(defmethod hugsql.core/hugsql-result-fn :* [sym]
-  'clojure-jobs-luminus.db.core/result-many-snake->kebab)
-
-(defmethod hugsql.core/hugsql-result-fn :many [sym]
-  'clojure-jobs-luminus.db.core/result-many-snake->kebab)
+(defmethod hugsql.core/hugsql-result-fn :many [_]
+  'clojure-jobs-luminus.util/result-many-snake->kebab)
 
 (comment
   (create-vacancy! {:title "Senior Clojure Deveeloper"

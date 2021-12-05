@@ -1,3 +1,7 @@
 {:lint-as
  {mount.core/defstate                 clojure.core/def
-  next.jdbc/with-transaction          clojure.core/with-open}}
+  next.jdbc/with-transaction          clojure.core/with-open}
+ 
+ :linters
+ {:refer-all {:exclude [clojure.test]}}
+ }

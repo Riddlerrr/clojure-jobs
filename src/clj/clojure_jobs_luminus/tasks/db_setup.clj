@@ -1,6 +1,6 @@
 (ns clojure-jobs-luminus.tasks.db-setup
   (:require
-   [clojure-jobs-luminus.db.core :refer [*db*] :as db]
+   [clojure-jobs-luminus.db.core :as db]
    [luminus-migrations.core :as migrations]
    [next.jdbc :as jdbc]
    [clojure-jobs-luminus.config :refer [env]]

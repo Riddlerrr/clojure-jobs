@@ -15,13 +15,12 @@
     (mount/start
      #'clojure-jobs-luminus.config/env
      #'clojure-jobs-luminus.db.core/*db*)
-    ;; (migrations/migrate ["migrate"] (select-keys env [:database-url]))
     (migrations/migrate ["reset"] (select-keys env [:database-url]))
     (f)))
 
 (deftest test-vacancies
   (let [expired-at (time/plus (time/local-date-time) (time/days 14))]
-    (jdbc/with-transaction [t-conn *db* {:rollback-only true}]
+    (jdbc/with-transaction [t-conn *db*]
       (is
        (= 1
           (db/create-vacancy!
