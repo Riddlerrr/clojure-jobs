@@ -43,5 +43,6 @@
                :location "Москва"
                :salary-min 5000
                :salary-max 7000
-               :remote-available true}
-              (select-keys vacancy [:title :description :location :salary-min :salary-max :remote-available]))))))))
+               :remote-available true
+               :expired-at expired-at}
+              (select-keys vacancy [:title :description :location :salary-min :salary-max :remote-available :expired-at]))))))))
