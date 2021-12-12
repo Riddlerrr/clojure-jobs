@@ -7,6 +7,7 @@ dev-config.edn
 test-config.edn
 *.jar
 *.class
+*.code-workspace
 /.lein-*
 profiles.clj
 /.env
