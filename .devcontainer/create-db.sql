@@ -1,0 +1,2 @@
+CREATE DATABASE clojure_jobs_luminus_dev;
+CREATE DATABASE clojure_jobs_luminus_test;

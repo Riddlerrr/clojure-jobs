@@ -1,0 +1,51 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.209.4/containers/debian
+{
+	"name": "Clojure",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	// "build": {
+	// 	"dockerfile": "Dockerfile",
+	// 	"args": {
+	// 		"VARIANT": "openjdk-17-lein-slim-bullseye"
+	// 	 }
+	// },
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"sqltools.connections": [
+			{
+				"name": "Rails Development Database",
+				"driver": "PostgreSQL",
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 5432,
+
+				// update this to match config/database.yml
+				"database": "clojure_jobs_luminus_dev",
+				"username": "postgres",
+			},
+		]
+	},
+
+
+	// Add the IDs of extensions you want installed when the container is created.
+		// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"betterthantomorrow.calva",
+		"eamodio.gitlens",
+		"ziyasal.vscode-open-in-github",
+		"mtxr.sqltools",
+		"mtxr.sqltools-driver-pg",
+	],
+	"postCreateCommand": "lein run migrate"
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Uncomment to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
+	// "mounts": [ "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" ],
+
+	// Uncomment when using a ptrace-based debugger like C++, Go, and Rust
+	// "runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+}
