@@ -19,20 +19,21 @@
     (f)))
 
 (deftest test-vacancies
-  (let [expired-at (time/plus (time/local-date-time) (time/days 14))]
+  (let [expired-at (time/truncate-to (time/plus (time/local-date-time) (time/days 14)) :seconds)]
     (jdbc/with-transaction [t-conn *db*]
-      (is
-       (= 1
-          (db/create-vacancy!
-           t-conn
-           {:title "Senior Clojure Developer"
-            :description "В нашу супер компанию требуются гребцы"
-            :location "Москва"
-            :salary-min 5000
-            :salary-max 7000
-            :remote-available true
-            :expired-at expired-at}
-           {})))
+      (testing "get inserted id"
+        (is
+         (= 1
+            (db/create-vacancy!
+             t-conn
+             {:title "Senior Clojure Developer"
+              :description "В нашу супер компанию требуются гребцы"
+              :location "Москва"
+              :salary-min 5000
+              :salary-max 7000
+              :remote-available true
+              :expired-at expired-at}
+             {}))))
 
       (testing "get inserted id"
         (let [vacancy (db/get-vacancy t-conn {:id 1} {})]
