@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content">
+  <h1 class="title">Добавить вакансию</h1>
+
+  <form action="/vacancies" method="post">
+    <div class="field">
+      <label class="label">Позиция</label>
+      <div class="control">
+        <input name="vacancy[title]"
+               value="{{vacancy.title}}"
+               class="input{% if errors.title %} is-danger{% endif %}"
+               type="text"
+               placeholder="Clojure разработчик">
+      </div>
+      {% if errors.title %}
+        <p class="help is-danger">{{errors.title}}</p>
+      {% endif %}
+    </div>
+
+    <div class="field">
+      <label class="label">Описание вакансии</label>
+      <div class="control">
+        <textarea name="vacancy[description]"
+                  class="textarea{% if errors.title %} is-danger{% endif %}"
+                  placeholder="Описание вакансии">{{vacancy.description}}</textarea>
+      </div>
+      {% if errors.description %}
+        <p class="help is-danger">{{errors.description}}</p>
+      {% endif %}
+    </div>
+
+    <div class="field">
+      <label class="label">Локация</label>
+      <div class="control">
+        <input name="vacancy[location]"
+               value="{{vacancy.location}}"
+               class="input{% if errors.title %} is-danger{% endif %}"
+               type="text"
+               placeholder="Город, страна">
+      </div>
+      {% if errors.location %}
+        <p class="help is-danger">{{errors.location}}</p>
+      {% endif %}
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <div class="field">
+          <label class="label">Вилка от</label>
+          <div class="control">
+            <input name="vacancy[salary-min]"
+                   value="{{vacancy.location}}"
+                   class="input{% if errors.title %} is-danger{% endif %}"
+                   type="number"
+                   min="1">
+          </div>
+          {% if errors.salary-min %}
+            <p class="help is-danger">{{errors.salary-min}}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="column">
+        <div class="field">
+          <label class="label">до</label>
+          <div class="control">
+            <input name="vacancy[salary-max]"
+                   class="input{% if errors.title %} is-danger{% endif %}"
+                   type="number"
+                   min="1">
+          </div>
+          {% if errors.salary-max %}
+            <p class="help is-danger">{{errors.salary-max}}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link">Разместить вакансию</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

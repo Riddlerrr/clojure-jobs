@@ -1,9 +1,10 @@
-(ns clojure-jobs-luminus.routes.home
+(ns clojure-jobs-luminus.routes.core
   (:require
    [clojure-jobs-luminus.layout :as layout]
    [clojure-jobs-luminus.db.core :as db]
-   [clojure.java.io :as io]
    [clojure-jobs-luminus.middleware :as middleware]
+   [clojure-jobs-luminus.routes.vacancies :refer [vacancies-routes]]
+   [clojure.java.io :as io]
    [ring.util.response]))
 
 (defn home-page [request]
@@ -15,11 +16,16 @@
 (defn about-page [request]
   (layout/render request "about.html"))
 
-(defn home-routes []
-  [ "" 
-   {:middleware [middleware/wrap-csrf
-                 middleware/wrap-formats]}
-   ["/" {:get home-page}]
+(defn main-routes []
+  [["/" {:get home-page}]
    ["/about" {:get about-page}]
    ["/dev/guide" {:get guide-page}]])
 
+(defn all-routes []
+  (conj 
+   []
+   [""
+    {:middleware [middleware/wrap-csrf
+                  middleware/wrap-formats]}]
+   (main-routes)
+   (vacancies-routes)))

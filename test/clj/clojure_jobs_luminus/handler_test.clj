@@ -20,4 +20,9 @@
 
   (testing "not-found route"
     (let [response ((app) (request :get "/invalid"))]
-      (is (= 404 (:status response))))))
+      (is (= 404 (:status response)))))
+
+  (testing "new vacancy page"
+    (let [response ((app) (request :get "/vacancies/new"))]
+      (println response)
+      (is (= 200 (:status response))))))

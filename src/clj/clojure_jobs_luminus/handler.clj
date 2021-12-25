@@ -2,7 +2,7 @@
   (:require
     [clojure-jobs-luminus.middleware :as middleware]
     [clojure-jobs-luminus.layout :refer [error-page]]
-    [clojure-jobs-luminus.routes.home :refer [home-routes]]
+    [clojure-jobs-luminus.routes.core :refer [all-routes]]
     [reitit.ring :as ring]
     [ring.middleware.content-type :refer [wrap-content-type]]
     [ring.middleware.webjars :refer [wrap-webjars]]
@@ -18,7 +18,7 @@
   :start
   (ring/ring-handler
     (ring/router
-      [(home-routes)])
+      [(all-routes)])
     (ring/routes
       (ring/create-resource-handler
         {:path "/"})
